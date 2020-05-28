@@ -35,7 +35,7 @@ class Simulation(object):
         self.amplitudes = kwargs.get('amplitudes',
                                      {Status.Susceptible: 5,
                                       Status.Recovered_Immune: 5,
-                                      status.Exposed: 5,
+                                      Status.Exposed: 5,
                                       Status.Infected: 5})
         '''A dictionary with the average mobility of agents inside the shared environment for each status'''
         self.minimum_income = kwargs.get("minimum_income", 1.0)
