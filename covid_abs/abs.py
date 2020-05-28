@@ -22,6 +22,8 @@ class Simulation(object):
         '''The height of the shared environment'''
         self.initial_infected_perc = kwargs.get("initial_infected_perc", 0.05)
         '''The initial percent of population which starts the simulation with the status Infected'''
+        self.initial_exposed_perc = kwargs.get("initial_exposed_perc", 0.05)
+        '''The initial percent of population which starts the simulation with the status Infected'''
         self.initial_immune_perc = kwargs.get("initial_immune_perc", 0.05)
         '''The initial percent of population which starts the simulation with the status Immune'''
         self.contagion_distance = kwargs.get("contagion_distance", 1.)
@@ -33,6 +35,7 @@ class Simulation(object):
         self.amplitudes = kwargs.get('amplitudes',
                                      {Status.Susceptible: 5,
                                       Status.Recovered_Immune: 5,
+                                      status.Exposed: 5,
                                       Status.Infected: 5})
         '''A dictionary with the average mobility of agents inside the shared environment for each status'''
         self.minimum_income = kwargs.get("minimum_income", 1.0)
@@ -146,9 +149,9 @@ class Simulation(object):
         :param agent2: an instance of agents.Agent
         """
 
-        if agent1.status == Status.Susceptible and agent2.status == Status.Infected:
+        if agent1.status == Status.Susceptible and agent2.status == Status.Infected and agent3.status == status.Exposed:
             contagion_test = np.random.random()
-            agent1.infection_status = InfectionSeverity.Exposed
+            agent1.infection_status = InfectionSeverity.Hospitalization
             if contagion_test <= self.contagion_rate:
                 agent1.status = Status.Infected
                 agent1.infection_status = InfectionSeverity.Asymptomatic
@@ -161,9 +164,9 @@ class Simulation(object):
         :param triggers: the list of population triggers related to the movement
         """
 
-        if agent.status == Status.Death or (agent.status == Status.Infected
+        if agent.status == Status.Death or (agent.status == Status.Infected or (agent.status == Status.Exposed 
                                             and (agent.infected_status == InfectionSeverity.Hospitalization
-                                                 or agent.infected_status == InfectionSeverity.Severe)):
+                                                 or agent.infected_status == InfectionSeverity.Severe))):
             return
 
         for trigger in triggers:
