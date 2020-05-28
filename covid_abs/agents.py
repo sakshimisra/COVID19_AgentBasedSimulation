@@ -8,10 +8,11 @@ import uuid
 
 class Status(Enum):
     """
-    Agent status, following the SIR model
+    Agent status, following the SIER model
     """
     Susceptible = 's'
     Infected = 'i'
+    Exposed = 'e'
     Recovered_Immune = 'c'
     Death = 'm'
 
@@ -20,7 +21,6 @@ class InfectionSeverity(Enum):
     """
     The Severity of the Infected agents
     """
-    Exposed = 'e'
     Asymptomatic = 'a'
     Hospitalization = 'h'
     Severe = 'g'
@@ -31,10 +31,11 @@ class AgentType(Enum):
     The type of the agent, or the node at the Graph
     """
     Person = 'p'
-    Business = 'b'
     House = 'h'
+    School= 's'
     Government = 'g'
     Healthcare = 'c'
+    General store = 'gs'
 
 
 class Agent(object):
