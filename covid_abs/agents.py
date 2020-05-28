@@ -35,7 +35,7 @@ class AgentType(Enum):
     School= 's'
     Government = 'g'
     Healthcare = 'c'
-    General store = 'gs'
+    Generalstore = 'gs'
 
 
 class Agent(object):
