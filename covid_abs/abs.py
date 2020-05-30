@@ -23,7 +23,8 @@ class Simulation(object):
         self.initial_infected_perc = kwargs.get("initial_infected_perc", 0.05)
         '''The initial percent of population which starts the simulation with the status Infected'''
         self.initial_exposed_perc = kwargs.get("initial_exposed_perc", 0.05)
-        '''The initial percent of population which starts the simulation with the status Infected'''
+        '''The initial percent of population which starts the simulation with the status Exposed'''
+        self.incubation_period = kwargs.get('incubation_period', 5)
         self.initial_immune_perc = kwargs.get("initial_immune_perc", 0.05)
         '''The initial percent of population which starts the simulation with the status Immune'''
         self.contagion_distance = kwargs.get("contagion_distance", 1.)
@@ -35,7 +36,7 @@ class Simulation(object):
         self.amplitudes = kwargs.get('amplitudes',
                                      {Status.Susceptible: 5,
                                       Status.Recovered_Immune: 5,
-                                      Status.Exposed: 5,
+                                      Status.exposed: 5,
                                       Status.Infected: 5})
         '''A dictionary with the average mobility of agents inside the shared environment for each status'''
         self.minimum_income = kwargs.get("minimum_income", 1.0)
@@ -124,6 +125,10 @@ class Simulation(object):
         # Initial infected population
         for i in np.arange(0, int(self.population_size * self.initial_infected_perc)):
             self.create_agent(Status.Infected)
+            
+        # Initial exposed population
+        for i in np.arange(0, int(self.population_size * self.initial_enfected_perc)):
+            self.create_agent(Status.enfected)
 
         # Initial immune population
         for i in np.arange(0, int(self.population_size * self.initial_immune_perc)):
@@ -148,8 +153,11 @@ class Simulation(object):
         :param agent1: an instance of agents.Agent
         :param agent2: an instance of agents.Agent
         """
+        if agent1.Status == Status.exposed and agent2.status == Status.Infected and self.incubation_period > 5:
+         agent1.Status == Status.Infected
+         agent1.infection_status = InfectionSeverity.Asymptomatic
 
-        if agent1.status == Status.Susceptible and agent2.status == Status.Infected and agent3.status == status.Exposed:
+        if agent1.status == Status.Susceptible and agent2.status == Status.Infected:
             contagion_test = np.random.random()
             agent1.infection_status = InfectionSeverity.Hospitalization
             if contagion_test <= self.contagion_rate:
@@ -197,7 +205,13 @@ class Simulation(object):
 
         :param agent: an instance of agents.Agent
         """
-
+        
+        if agent.status == Status.exposed:
+            agent.incubation_time += 1
+        if agent.incubation_time >14:
+            agent.infection_status = InfectionSeverity.Asymptomatic:
+            agent.status = Status.Infected
+            
         if agent.status == Status.Death:
             return
 
