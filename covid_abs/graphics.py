@@ -24,10 +24,10 @@ def color1(s):
     """Plotting colors by status string"""
     if s == 'Susceptible':
         return 'lightblue'
+      if s == 'exposed':
+        return 'yellow'
     elif s == 'Infected':
         return 'gray'
-    elif e == 'Exposed':
-        return 'yellow'
     elif s == 'Recovered_Immune':
         return 'lightgreen'
     elif s == 'Death':
@@ -44,7 +44,7 @@ def color2(agent):
     """Plotting colors by Status and InfectionSeverity"""
     if agent.status == Status.Susceptible:
         return 'blue'
-    elif agent.status == Status.Exposed:
+    elif agent.status == Status.exposed:
         return 'yellow'
     elif agent.status == Status.Infected:
         if agent.infected_status == InfectionSeverity.Asymptomatic:
