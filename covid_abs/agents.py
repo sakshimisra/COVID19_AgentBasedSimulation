@@ -12,7 +12,7 @@ class Status(Enum):
     """
     Susceptible = 's'
     Infected = 'i'
-    Exposed = 'e'
+    exposed = 'x'
     Recovered_Immune = 'c'
     Death = 'm'
 
@@ -21,6 +21,7 @@ class InfectionSeverity(Enum):
     """
     The Severity of the Infected agents
     """
+    Exposed = 'e'
     Asymptomatic = 'a'
     Hospitalization = 'h'
     Severe = 'g'
