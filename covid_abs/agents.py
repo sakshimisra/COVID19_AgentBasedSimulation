@@ -53,7 +53,9 @@ class Agent(object):
         self.infected_status = InfectionSeverity.Asymptomatic
         """The infection severity of the agent"""
         self.infected_time = kwargs.get('infected_time', 0)
-        """The time (in days) after the infection"""
+         """The time (in days) after the infection"""
+        self.incubation_time = kwargs.get('incubation_time', 0)
+        """The time (in days) after the incubation"""
         self.age = kwargs.get('age', 0)
         """The age (in years) of the agent"""
         self.social_stratum = kwargs.get('social_stratum', 0)
